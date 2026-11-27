@@ -95,6 +95,54 @@ void UB_VGA_SetPixel(uint16_t xp, uint16_t yp, uint8_t color)
   VGA_RAM1[(yp*(VGA_DISPLAY_X+1))+xp]=color;
 }
 
+/**
+ * @brief Function which returns the lowest of 2 integers
+ *
+ * This function returns the lowest of the 2 given integers, similar to
+ *
+ * @author Fabian Meijneken
+ * @param val1 First value
+ * @param val2 Second value
+ */
+int min_int(int val1, int val2)
+{
+	if (val1 <= val2)
+	{
+		return val1;
+	}
+	else
+	{
+		return val2;
+	}
+}
+
+/**
+ * @brief Function to draw a line on the VGA screen
+ *
+ * This function draws a line from (x1, y1) to (x2, y2), and is dependent on UB_VGA_SetPixel
+ *
+ * @author Fabian Meijneken
+ * @param x1 X position of point 1
+ * @param y1 Y position of point 1
+ * @param x2 X position of point 2`
+ * @param y2 Y position of point 2
+ */
+void UB_VGA_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color)
+{
+	// Check for invalid arguments
+	x1 = min_int(x1, VGA_DISPLAY_X);
+	x2 = min_int(x2, VGA_DISPLAY_X);
+	y1 = min_int(y1, VGA_DISPLAY_Y);
+	y2 = min_int(y2, VGA_DISPLAY_Y);
+
+	uint16_t dx = x2 - x1;
+	uint16_t dy = y2 - y1;
+	float slope = dx / dy;
+	for (int i = 0; i < dx; i++) {
+		UB_VGA_SetPixel(x1+i, y1 + (i * slope), color);
+	}
+
+}
 
 //--------------------------------------------------------------
 // interne Funktionen
