@@ -135,8 +135,8 @@ void UB_VGA_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t
 	y1 = min_int(y1, VGA_DISPLAY_Y);
 	y2 = min_int(y2, VGA_DISPLAY_Y);
 
-	uint16_t dx = x2 - x1;
-	uint16_t dy = y2 - y1;
+	int dx = x2 - x1;
+	int dy = y2 - y1;
 	float slope = dx / dy;
 	for (int i = 0; i < dx; i++) {
 		UB_VGA_SetPixel(x1+i, y1 + (i * slope), color);
